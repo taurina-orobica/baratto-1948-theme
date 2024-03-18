@@ -834,10 +834,6 @@ class SlideshowComponent extends SliderComponent {
     this.sliderFirstItemNode = this.slider.querySelector('.slideshow__slide');
     if (this.sliderItemsToShow.length > 0) this.currentPage = 1;
 
-    this.announcementBarSlider = this.querySelector('.announcement-bar-slider');
-    // Value below should match --duration-announcement-bar CSS value
-    this.announcerBarAnimationDelay = this.announcementBarSlider ? 250 : 0;
-
     this.sliderControlLinksArray = Array.from(
       this.sliderControlWrapper.querySelectorAll('.slider-counter__link'),
     );
@@ -846,28 +842,6 @@ class SlideshowComponent extends SliderComponent {
     );
     this.slider.addEventListener('scroll', this.setSlideVisibility.bind(this));
     this.setSlideVisibility();
-
-    if (this.announcementBarSlider) {
-      this.announcementBarArrowButtonWasClicked = false;
-
-      this.reducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-      );
-      this.reducedMotion.addEventListener('change', () => {
-        if (this.slider.getAttribute('data-autoplay') === 'true')
-          this.setAutoPlay();
-      });
-
-      [this.prevButton, this.nextButton].forEach((button) => {
-        button.addEventListener(
-          'click',
-          () => {
-            this.announcementBarArrowButtonWasClicked = true;
-          },
-          { once: true },
-        );
-      });
-    }
 
     if (this.slider.getAttribute('data-autoplay') === 'true')
       this.setAutoPlay();
@@ -926,7 +900,7 @@ class SlideshowComponent extends SliderComponent {
       this.slider.scrollTo({
         left: position,
       });
-    }, this.announcerBarAnimationDelay);
+    }, 0);
   }
 
   update() {
@@ -980,8 +954,6 @@ class SlideshowComponent extends SliderComponent {
       } else if (this.autoplayButtonIsSetToPlay) {
         this.pause();
       }
-    } else if (this.announcementBarSlider.contains(event.target)) {
-      this.pause();
     }
   }
 
@@ -1045,39 +1017,6 @@ class SlideshowComponent extends SliderComponent {
       }
     });
     this.wasClicked = false;
-  }
-
-  applyAnimationToAnnouncementBar(button = 'next') {
-    if (!this.announcementBarSlider) return;
-
-    const itemsCount = this.sliderItems.length;
-    const increment = button === 'next' ? 1 : -1;
-
-    const currentIndex = this.currentPage - 1;
-    let nextIndex = (currentIndex + increment) % itemsCount;
-    nextIndex = nextIndex === -1 ? itemsCount - 1 : nextIndex;
-
-    const nextSlide = this.sliderItems[nextIndex];
-    const currentSlide = this.sliderItems[currentIndex];
-
-    const animationClassIn = 'announcement-bar-slider--fade-in';
-    const animationClassOut = 'announcement-bar-slider--fade-out';
-
-    const isFirstSlide = currentIndex === 0;
-    const isLastSlide = currentIndex === itemsCount - 1;
-
-    const shouldMoveNext =
-      (button === 'next' && !isLastSlide) ||
-      (button === 'previous' && isFirstSlide);
-    const direction = shouldMoveNext ? 'next' : 'previous';
-
-    currentSlide.classList.add(`${animationClassOut}-${direction}`);
-    nextSlide.classList.add(`${animationClassIn}-${direction}`);
-
-    setTimeout(() => {
-      currentSlide.classList.remove(`${animationClassOut}-${direction}`);
-      nextSlide.classList.remove(`${animationClassIn}-${direction}`);
-    }, this.announcerBarAnimationDelay * 2);
   }
 
   linkToSlide(event) {
