@@ -1,21 +1,24 @@
 {% comment %}theme-check-disable UndefinedObject{% endcomment %}
 
-<footer class='flex flex-col  bg-dark text-white'>
+<footer class='flex flex-col bg-dark text-white'>
   <div class=' h-4 bg-[red] w-full'></div>
   <div class='flex flex-col gap-y-space-m container py-space-l'>
-    <div class='flex items-center gap-x-4 justify-between'>
-      <h2 class='text-white'>Iscriviti.</h2>
-      <p class=''>Iscriviti alla nostra newsletter per ricevere aggiornamenti sul mondo Baratto</p>
+    <div class='flex items-start gap-x-4'>
+      <h2 class='text-white whitespace-nowrap'>Iscriviti.</h2>
+      <p class='text-right'>Iscriviti alla nostra newsletter per ricevere aggiornamenti sul mondo Baratto</p>
     </div>
-    <div class='mx-auto flex flex-col gap--space-l lg:flex-row'>
+    <div class='mx-auto flex flex-col gap-y-space-l lg:flex-row'>
       <input
         type='text'
-        class='text-black placeholder:text-neutral-500 text-sm mx-auto flex w-full max-w-screen-2xl flex-col rounded-sm border bg-white px-4 py-2'
+        class='text-gray text-sm mx-auto flex w-full max-w-screen-2xl flex-col rounded-lg border bg-white px-4 py-2'
         placeholder='Inserisci la tua email'
       >
       <div class='flex items-center gap-x-20'>
-        Iscriviti alla nostra newsletter per ricevere aggiornamenti sul mondo Baratto
-        <button class='bg-gray px-space-l'>Iscriviti</button>
+        <div class='flex items-center gap-x-4'>
+          <input type='checkbox'>
+          <p>Iscriviti alla nostra newsletter per ricevere aggiornamenti sul mondo Baratto</p>
+        </div>
+        <button class='bg-gray px-space-xl py-space-3xs rounded-lg'>Iscriviti</button>
       </div>
     </div>
     <div class='flex justify-around'>
