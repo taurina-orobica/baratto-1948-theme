@@ -106,7 +106,7 @@
       }
     },
     "about-us": {
-      "type": "about-us",
+      "type": "new-collection",
       "blocks": {
         "text": {
           "type": "text",
@@ -191,7 +191,7 @@
     "image_banner",
     "rich_text",
     "featured_collection",
-    "about-us",
+    "new-collection",
     "video",
     "multicolumn"
   ]
