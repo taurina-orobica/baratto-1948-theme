@@ -1,50 +1,38 @@
-<div class='p-4'>
-  {%- for block in section.blocks -%}
-    {%- case block.type -%}
-      {%- when 'text' -%}
-        <h1>Ciao a tutti</h1>
-        <div
-          class='banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}'
-          {{ block.shopify_attributes }}
-        >
-          {%- if block.settings.button_label_1 != blank -%}
-            <a
-              {% if block.settings.button_link_1 == blank %}
-                role='link' aria-disabled='true'
-              {% else %}
-                href='{{ block.settings.button_link_1 }}'
-              {% endif %}
-              class='button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}'
-            >
-              {{- block.settings.button_label_1 | escape -}}
-            </a>
-          {%- endif -%}
-          {%- if block.settings.button_label_2 != blank -%}
-            <a
-              {% if block.settings.button_link_2 == blank %}
-                role='link' aria-disabled='true'
-              {% else %}
-                href='{{ block.settings.button_link_2 }}'
-              {% endif %}
-              class='button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}'
-            >
-              {{- block.settings.button_label_2 | escape -}}
-            </a>
-          {%- endif -%}
-        </div>
-    {%- endcase -%}
-  {%- endfor -%}
-</div>
+<section class='my-space-l flex flex-col gap-y-space-m'>
+  <div class='container mb-space-xs mt-space-m'>
+    <h2 class='mb-space-s font-serif'>{{ section.settings.title }}</h2>
+    <p class='text-fluid-7'>{{ section.settings.text }}</p>
+  </div>
+  <img
+    src='{{ section.settings.image | image_url: width: 500 }}'
+    alt='{{ section.settings.image.alt | escape }}'
+    width='500'
+    height='{{ 500 | divided_by: section.settings.image.aspect_ratio | ceil }}'
+    loading='lazy'
+  >
+</section>
 
 {% schema %}
 {
-  "name": "t:sections.about-us.name",
+  "name": "About us",
   "tag": "section",
-  "class": "section",
-  "blocks": [
+  "class": "about-us",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
     {
       "type": "text",
-      "name": "Text"
+      "id": "title",
+      "label": "title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "text"
     }
   ]
 }
