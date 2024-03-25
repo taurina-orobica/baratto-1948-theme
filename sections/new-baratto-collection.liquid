@@ -1,0 +1,82 @@
+{%- style -%}
+  .custom-horizontal-scrollbar {
+    &::-webkit-scrollbar {
+      height: pxToRem(2.8);
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+      border: 1px solid transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: pxToRem(8);
+      background-color: $medium;
+    }
+  }
+{%- endstyle -%}
+
+{% comment %}
+  <div class='ml-space-s w-2/3'>
+    {% comment %}
+      <Link href={`/product/${p.handle}`}>
+        <Image
+          src={p.featuredImage.url}
+          width={200}
+          height={200}
+          className="rounded-st"
+          style={{ width: '200px' }}
+        />
+        <p className="-pt--space-xs">{p.title}</p>
+        <p className="font-bold">
+          {currencyFormatter(
+            p.priceRange.minVariantPrice.currencyCode,
+            p.priceRange.minVariantPrice.amount
+          )}
+        </p>
+      </Link>
+    {% endcomment %}
+  </div>
+  ))}
+{% endcomment %}
+
+<section>
+  <h2>Nuova collezione Baratto</h2>
+  <p>Abiti eleganti da uomo, giacche sartoriali da uomo ed altri capi must-have nel pieno mood Playful elegance.</p>
+  <div class='custom-horizontal-scrollbar mb-space-m overflow-x-auto'>
+    <div class='pb-space-sx flex w-max pr-space-s'>
+      {%- for product in section.settings.collection.products limit: section.settings.products_to_show -%}
+        <div>
+          {% render 'card-product',
+            card_product: product,
+            media_aspect_ratio: section.settings.image_ratio,
+            image_shape: section.settings.image_shape,
+            show_secondary_image: section.settings.show_secondary_image,
+            show_vendor: section.settings.show_vendor,
+            show_rating: section.settings.show_rating,
+            show_quick_add: section.settings.enable_quick_add,
+            section_id: section.id
+          %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.featured-collection.name",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.featured-collection.settings.collection.label"
+    }
+  ]
+}
+{% endschema %}
